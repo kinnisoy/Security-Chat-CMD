@@ -1,3 +1,34 @@
+#### This pargram was finished ,based on Diffie-Hellman protrol,DES and HASH.
+
+
+
+
+### Functions:
+   #####   1.Communication software based on C / S mode
+   #####   2.Use DH key exchange protocol to negotiate key
+   #####   3.Encrypting message with DES
+   #####   4.Using hash digest to verify message authenticity
+
+
+### How To Use：
+
+         VS 2019+ ,make sure `X86 MODE`
+  
+
+the client.cpp and server.cpp were another main function to show this program.
+You can repalce the DH_A.cpp and DH_B.cpp in the project.
+Am I very cute? isn't? 
+
+
+
+### [Warnings]
+
+1.If You got an Unexpected interruption，Just Restart it！！！
+
+2.IF You got an error：`eror:4996` Just add`#pragma warning(disable: 4996)` to you project.(Some compilers was Just warnning 4996)
+
+
+------
 #### 本程序基于DH密钥交换协议，DES加密协议和HASH杂凑摘要完成
 
 
