@@ -58,7 +58,7 @@ int main()
 			getline(cin, Statement);
 			My_HASH(Statement, hash_data);
 			send(S, hash_data, 41, 0);
-			string Encrypted_Data = DES_Container.Encryption(Statement);
+			Encrypted_Data = DES_Container.Encryption(Statement);
 			send(S, Encrypted_Data.c_str(), Encrypted_Data.length(), 0);
 		
 	}
