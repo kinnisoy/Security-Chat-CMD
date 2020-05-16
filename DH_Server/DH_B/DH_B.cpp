@@ -4,8 +4,8 @@
 #include <time.h>
 
 
-BigInteger* Sb = NULL; //DHĞ­ÉÌµÄºóµÄ£¬DES¶Ô³ÆÃÜÔ¿
-DES DES_Container;     //DES¶ÔÏó
+BigInteger* Sb = NULL; //DHåå•†çš„åçš„ï¼ŒDESå¯¹ç§°å¯†é’¥
+DES DES_Container;     //DESå¯¹è±¡
 
 int main()
 {
@@ -29,14 +29,14 @@ int main()
 		cout << "=====DD==DD===============HH======HH======" << endl;
 		cout << "=====DDDD=================HH======HH======" << endl;
 		cout << "==========================================" << endl;
-		//DESÔ´ÃÜÔ¿Éè¶¨
+		//DESæºå¯†é’¥è®¾å®š
 		DES_Container.Set_The_Source_Key(Sb->toString());
-		//DES×ÓÃÜÔ¿Éú³É
+		//DESå­å¯†é’¥ç”Ÿæˆ
 		DES_Container.Subkey_Generation();
 	}
 	string Statement;
 	char hash_data[41], hash_new[41];
-	cout << "µÈ´ı¿Í»§¶ËÖ÷¶¯·¢ËÍÏûÏ¢.........£¨Òª¸ßÀä£©" << endl;
+	cout << "ç­‰å¾…å®¢æˆ·ç«¯ä¸»åŠ¨å‘é€æ¶ˆæ¯.........ï¼ˆè¦é«˜å†·ï¼‰" << endl;
 	while (1) {
 		string Encrypted_Data;
 		string Decrypted_Data;
@@ -47,20 +47,20 @@ int main()
 		Decrypted_Data = DES_Container.Decryption(Encrypted_Data);
 		My_HASH(Decrypted_Data,hash_new);
 		if (!strcmp(hash_data, hash_new)) {
-			cout <<"¿Í»§¶ËÏûÏ¢£º"<< Decrypted_Data<<endl;
+			cout <<"å®¢æˆ·ç«¯æ¶ˆæ¯ï¼š"<< Decrypted_Data<<endl;
 		}
 		else {
-			cout << "²»¿ÉĞÅÏûÏ¢£¬ÇëÖØĞÂ½¨Á¢Á¬½Ó" << endl;
+			cout << "ä¸å¯ä¿¡æ¶ˆæ¯ï¼Œè¯·é‡æ–°å»ºç«‹è¿æ¥" << endl;
 			exit(-1);
 		}
-		while (1) {
-			cout << "»Ø¸´ÄÚÈİ£º";
+		
+			cout << "å›å¤å†…å®¹ï¼š";
 			getline(cin, Statement);
 			My_HASH(Statement, hash_data);
 			send(S, hash_data, 41, 0);
 			string Encrypted_Data = DES_Container.Encryption(Statement);
 			send(S, Encrypted_Data.c_str(), Encrypted_Data.length(), 0);
-		}
+		
 	}
 	closesocket(S);
 	closesocket(S_Original);
@@ -70,10 +70,10 @@ int main()
 
 bool Initialization()
 {
-	//ÉèÖÃÊ±¼äÖÖ×Ó
+	//è®¾ç½®æ—¶é—´ç§å­
 	srand((unsigned int)time(NULL));
 
-	//³õÊ¼»¯¶¯Ì¬Á´½Ó¿â
+	//åˆå§‹åŒ–åŠ¨æ€é“¾æ¥åº“
 	WSADATA WSAData;
 	if (WSAStartup(2.2, &WSAData))
 	{
@@ -85,7 +85,7 @@ bool Initialization()
 
 bool DH_KeyExchange(SOCKET S_New)
 {
-	//Éú³É¹«Ô¿ºÍË½Ô¿
+	//ç”Ÿæˆå…¬é’¥å’Œç§é’¥
 	BigInteger Q(My_CrpytGenKey());
 	BigInteger Self_Key(My_CrpytGenKey());
 
@@ -102,7 +102,7 @@ bool DH_KeyExchange(SOCKET S_New)
 		return FALSE;
 	BigInteger P(PublicKeyStr_A);
 
-	//½ÓÊÕGa,·¢ËÍGb,ÃÜÔ¿¼ÆËã
+	//æ¥æ”¶Ga,å‘é€Gb,å¯†é’¥è®¡ç®—
 	string Ga_str;
 	BigInteger* Ga = NULL;
 	BigInteger* Gb = NULL;
@@ -115,7 +115,7 @@ bool DH_KeyExchange(SOCKET S_New)
 		Ga = new BigInteger(Ga_str);
 		My_SendKey(S_New, Gb->toString().c_str());
 
-		//×îÖÕÍ¨ĞÅÃÜÔ¿¼ÆËã
+		//æœ€ç»ˆé€šä¿¡å¯†é’¥è®¡ç®—
 		if (P > Q)
 			Sb = new BigInteger(Ga->modPow(Self_Key, P));
 		else
@@ -127,7 +127,7 @@ bool DH_KeyExchange(SOCKET S_New)
 
 SOCKET My_Accept(SOCKET* TEMP)
 {
-	//´´½¨Ì×½Ó×Ö
+	//åˆ›å»ºå¥—æ¥å­—
 	SOCKET S = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, NULL, NULL);
 	if (S == INVALID_SOCKET)
 	{
@@ -192,7 +192,7 @@ BigInteger My_CrpytGenKey()
 	{
 		int Num_OF_Access = 0;
 
-		//·ÑÂíËØĞÔ¼ìÑé
+		//è´¹é©¬ç´ æ€§æ£€éªŒ
 		string Hex_Number_P = My_RandKeyStr();
 		BigInteger P(Hex_Number_P);
 		for (int i = 0; i < 20; i++)
@@ -224,7 +224,7 @@ BigInteger My_CrpytGenKey()
 
 string My_RandKeyStr()
 {
-	//Ëæ»úÉú³É16½øÖÆ×Ö·û´®ÓÃÓÚÉú³É´óÊıP
+	//éšæœºç”Ÿæˆ16è¿›åˆ¶å­—ç¬¦ä¸²ç”¨äºç”Ÿæˆå¤§æ•°P
 	string Hex_Str;
 	string Hex_Number = "0123456789ABCDEF";
 
