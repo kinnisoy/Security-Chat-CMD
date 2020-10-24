@@ -44,8 +44,7 @@ Am I very cute? isn't?
 
          VS 2019或以上版本，选择x86模式，即可运行
   
-根目录的两个CPP分别为CLIENT和SERVER的主函数，可以替换到项目中的DH_A.cpp(c)和DH_B.cpp(s)
-就可以当成两份作业了，嘻嘻嘻，我是不是太贴心了~~~
+
 
 ### 【注意】
 
